@@ -77,20 +77,20 @@ li::first-letter {
 }
 
 .weather-forecast {
-  margin-top: 20px;
+  margin-top: 18px;
   text-align: center;
   color: black;
 }
 
 .weather-forecast-date {
-  font-size: 16px;
-  opacity: 0.6;
+  font-size: 14px;
+  opacity: 0.5;
 }
 
 .weather-forecast-temperatures-min {
-  opacity: 0.3;
+  opacity: 0.5;
 }
 
 .weather-forecast-temperatures {
-  font-size: 13px;
+  font-size: 11px;
 }

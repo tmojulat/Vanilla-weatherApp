@@ -21,6 +21,29 @@ function formatDate(timestamp) {
   return `${day} ${hours}: ${minutes}`;
 }
 
+function displayForecast() {
+  let forecastElement = document.querySelector("#forecast");
+
+  forecastElement.innerHTML = `
+  <div class="row">
+        <div class="col-2">
+          <div class="weather-forecast-date">Sat</div>
+        <img
+        src="https://ssl.gstatic.com/onebox/weather/64/rain_light.png"
+        alt="" 
+        width="40"
+        />
+        <div class="weather-forecast-temperatures">
+          <span class="weather-forecast-temperatures-max">
+            31°</span>
+          <span class="weather-forecast-temperatures-min">
+            29°</span>
+    </div>
+  </div>
+</div>
+`;
+}
+
 function displayTemperature(response) {
   let temperatureElement = document.querySelector("#temperature");
   let cityElement = document.querySelector("#city");
@@ -87,3 +110,4 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiustTemperature);
 
 search("Kota Kinabalu");
+displayForecast();
