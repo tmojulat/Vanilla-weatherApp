@@ -8,6 +8,7 @@ function formatDate(timestamp) {
   if (minutes < 10) {
     minutes = `0${minutes}`;
   }
+
   let days = [
     "Sunday",
     "Monday",
@@ -17,7 +18,6 @@ function formatDate(timestamp) {
     "Friday",
     "Saturday",
   ];
-
   let day = days[date.getDay()];
   return `${day} ${hours}: ${minutes}`;
 }
@@ -26,10 +26,9 @@ function displayForecast(response) {
   console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
 
-  let days = ["Sat", "Sun", "Mon", "Tue", "Wed"];
+  let days = ["Sun", "Mon", "Tue", "Wed"];
 
   let forecastHTML = `<div class="row">`;
-
   days.forEach(function (day) {
     forecastHTML =
       forecastHTML +
@@ -70,7 +69,7 @@ function displayTemperature(response) {
 
   let celsiusTemperature = response.data.main.temp;
 
-  temperatureElement.innerHTML = Math.round(celciusTemperature);
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
   cityElement.innerHTML = response.data.name;
   descriptionElement.innerHTML = response.data.weather[0].description;
   humidityElement.innerHTML = response.data.main.humidity;
