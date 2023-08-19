@@ -22,8 +22,7 @@ function formatDate(timestamp) {
   return `${day} ${hours}: ${minutes}`;
 }
 
-function displayForecast(response) {
-  console.log(response.data.daily);
+function displayForecast() {
   let forecastElement = document.querySelector("#forecast");
 
   let days = ["Sun", "Mon", "Tue", "Wed"];
@@ -123,6 +122,7 @@ let fahrenheitLink = document.querySelector("#fahrenheit-link");
 fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
 
 let celsiusLink = document.querySelector("#celsius-link");
-celsiusLink.addEventListener("click", displayCelsiustTemperature);
+celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("Kota Kinabalu");
+displayForecast();
