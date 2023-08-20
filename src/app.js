@@ -22,29 +22,34 @@ function formatDate(timestamp) {
   return `${day} ${hours}: ${minutes}`;
 }
 
-function displayForecast() {
+function displayForecast(response) {
+  console.log(response.data.daily);
   let forecastElement = document.querySelector("#forecast");
 
-  let days = ["Sun", "Mon", "Tue", "Wed"];
-
   let forecastHTML = `<div class="row">`;
-  days.forEach(function (day) {
-    forecastHTML =
-      forecastHTML +
-      `
+  response.data.daily.forEach(function (forecast, index) {
+    if (index < 5) {
+      let forecastDate = new Date(forecast.dt * 1000);
+      let day = forecastDate.toLocaleString("en-US", { weekday: "short" });
+      let icon = forecast.weather[0].icon;
+      let maxTemp = Math.round(forecast.temp.max);
+      let minTemp = Math.round(forecast.temp.min);
+
+      forecastHTML += `
         <div class="col-2">
-          <div class="weather-forecast-date">${day}</div>
-        <img
-        src="https://ssl.gstatic.com/onebox/weather/64/rain_light.png"
-        alt="" 
-        width="40"
-        />
-        <div class="weather-forecast-temperatures">
-          <span class="weather-forecast-temperatures-max">31°</span>
-          <span class="weather-forecast-temperatures-min">29°</span>
+          <div class="weather-forecast-date">${day}</div> 
+          <img
+            src="http://openweathermap.org/img/wn/${icon}.png"
+            alt="" 
+            width="40"
+          />
+         <div class="weather-forecast-temperatures">
+          <span class="weather-forecast-temperatures-max">${maxTemp}°</span>
+          <span class="weather-forecast-temperatures-min">${minTemp}°</span>
+       </div>
     </div>
-  </div>
 `;
+    }
   });
 
   forecastHTML = forecastHTML + `</div>`;
@@ -53,7 +58,7 @@ function displayForecast() {
 
 function getForecast(coordinates) {
   let apiKey = "1fa00e65cf105b1c9ae0d3141eca3cfd";
-  let apiUrl = `https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
 
@@ -94,6 +99,7 @@ function handleSubmit(event) {
   let cityInputElement = document.querySelector("#city-input");
   search(cityInputElement.value);
 }
+let celsiusTemperature = null;
 
 function displayFahrenheitTemperature(event) {
   event.preventDefault();
@@ -113,8 +119,6 @@ function displayCelsiusTemperature(event) {
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
 
-let celsiusTemperature = null;
-
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
 
@@ -125,4 +129,3 @@ let celsiusLink = document.querySelector("#celsius-link");
 celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("Kota Kinabalu");
-displayForecast();
