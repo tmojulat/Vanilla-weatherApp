@@ -38,16 +38,16 @@ function displayForecast(response) {
       forecastHTML += `
         <div class="col-2">
           <div class="weather-forecast-date">${day}</div> 
-          <img
-            src="http://openweathermap.org/img/wn/${icon}.png"
-            alt="" 
-            width="40"
-          />
-         <div class="weather-forecast-temperatures">
+        <img
+        src="http://openweathermap.org/img/wn/${icon}.png"
+        alt="" 
+        width="40"
+        />
+        <div class="weather-forecast-temperatures">
           <span class="weather-forecast-temperatures-max">${maxTemp}°</span>
           <span class="weather-forecast-temperatures-min">${minTemp}°</span>
-       </div>
     </div>
+  </div>
 `;
     }
   });
@@ -58,9 +58,7 @@ function displayForecast(response) {
 
 function getForecast(coordinates) {
   let apiKey = "1fa00e65cf105b1c9ae0d3141eca3cfd";
-  let apiUrl = `
-    "https://api.openweathermap.org/data/3.0/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid={1fa00e65cf105b1c9ae0d3141eca3cfd}&units=metric"`;
-
+  let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
 
@@ -83,7 +81,7 @@ function displayTemperature(response) {
   dateElement.innerHTML = formatDate(response.data.dt * 1000);
   iconElement.setAttribute(
     "src",
-    `https://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
+    `http://openweathermap.org/img/wn/${response.data.weather[0].icon}@2x.png`
   );
   iconElement.setAttribute("alt", response.data.weather[0].description);
 
