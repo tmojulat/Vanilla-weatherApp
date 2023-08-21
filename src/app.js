@@ -30,6 +30,7 @@ function formatDay(timestamp) {
   return days[day];
 }
 function displayForecast(response) {
+  console.log(response.data.daily);
   let forecast = response.data.daily;
 
   let forecastElement = document.querySelector("#forecast");
@@ -51,10 +52,10 @@ function displayForecast(response) {
           />
           <div class="weather-forecast-temperatures">
             <span class="weather-forecast-temperatures-max">${Math.round(
-              forecastDay.temp.max
+              forecastDay.temp.min
             )}°</span>
             <span class="weather-forecast-temperatures-min">${Math.round(
-              forecastDay.temp.min
+              forecastDay.temp.max
             )}°</span>
           </div>
         </div>
@@ -128,6 +129,7 @@ function displayCelsiusTemperature(event) {
   let temperatureElement = document.querySelector("#temperature");
   temperatureElement.innerHTML = Math.round(celsiusTemperature);
 }
+
 let celsiusTemperature = null;
 
 let form = document.querySelector("#search-form");
