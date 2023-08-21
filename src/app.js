@@ -29,13 +29,12 @@ function formatDay(timestamp) {
 
   return days[day];
 }
-
 function displayForecast(response) {
-  console.log(response.data);
   let forecast = response.data.daily;
-  let forecastElement = document.querySelector("#forecast");
-  let forecastHTML = `<div class="row">`;
 
+  let forecastElement = document.querySelector("#forecast");
+
+  let forecastHTML = `<div class="row">`;
   forecast.forEach(function (forecastDay, index) {
     if (index < 6) {
       forecastHTML =
@@ -58,16 +57,18 @@ function displayForecast(response) {
               forecastDay.temp.min
             )}°</span>
           </div>
-        </div>`;
+        </div>
+        `;
     }
   });
 
-  forecastHTML += `</div>`;
+  forecastHTML = forecastHTML + `</div>`;
   forecastElement.innerHTML = forecastHTML;
+  console.log(forecastHTML);
 }
 
 function getForecast(coordinates) {
-  let apiKey = "1fa00e65cf105b1c9ae0d3141eca3cfd";
+  let apiKey = "842b36d55cb28eba74a018029d56b04c";
   let apiUrl = `https://api.openweathermap.org/data/2.5/onecall?lat=${coordinates.lat}&lon=${coordinates.lon}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayForecast);
 }
@@ -99,7 +100,7 @@ function displayTemperature(response) {
 }
 
 function search(city) {
-  let apiKey = "1fa00e65cf105b1c9ae0d3141eca3cfd";
+  let apiKey = "842b36d55cb28eba74a018029d56b04c";
   let apiUrl = `https://api.openweathermap.org/data/2.5/weather?q=${city}&appid=${apiKey}&units=metric`;
   axios.get(apiUrl).then(displayTemperature);
 }
@@ -110,7 +111,32 @@ function handleSubmit(event) {
   search(cityInputElement.value);
 }
 
+function displayFahrenheitTemperature(event) {
+  event.preventDefault();
+  let temperatureElement = document.querySelector("#temperature");
+
+  celsiusLink.classList.remove("active");
+  fahrenheitLink.classList.add("active");
+  let fahrenheitTemperature = (celsiusTemperature * 9) / 5 + 32;
+  temperatureElement.innerHTML = Math.round(fahrenheitTemperature);
+}
+
+function displayCelsiusTemperature(event) {
+  event.preventDefault();
+  celsiusLink.classList.add("active");
+  fahrenheitLink.classList.remove("active");
+  let temperatureElement = document.querySelector("#temperature");
+  temperatureElement.innerHTML = Math.round(celsiusTemperature);
+}
+let celsiusTemperature = null;
+
 let form = document.querySelector("#search-form");
 form.addEventListener("submit", handleSubmit);
+
+let fahrenheitLink = document.querySelector("#fahrenheit-link");
+fahrenheitLink.addEventListener("click", displayFahrenheitTemperature);
+
+let celsiusLink = document.querySelector("#celsius-link");
+celsiusLink.addEventListener("click", displayCelsiusTemperature);
 
 search("Kota Kinabalu");
